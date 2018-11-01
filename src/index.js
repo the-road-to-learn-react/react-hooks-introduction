@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // import App from './useState-example';
-// import App from './useEffect-example';
+import App from './useEffect-example';
 // import App from './customHook-example';
-import App from './useDataApiHook-example';
+// import App from './useDataApiHook-example';
 
 import * as serviceWorker from './serviceWorker';
 

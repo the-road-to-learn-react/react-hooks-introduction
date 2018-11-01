@@ -4,14 +4,18 @@ function App() {
   const [isOn, setIsOn] = useState(false);
   const [timer, setTimer] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(
-      () => isOn && setTimer(timer + 1),
-      1000,
-    );
+  useEffect(
+    () => {
+      let interval;
 
-    return () => clearInterval(interval);
-  }, []);
+      if (isOn) {
+        interval = setInterval(() => setTimer(timer + 1), 1000);
+      }
+
+      return () => clearInterval(interval);
+    },
+    [isOn],
+  );
 
   const onReset = () => {
     setIsOn(false);
