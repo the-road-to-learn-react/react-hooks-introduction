@@ -14,7 +14,7 @@ function App() {
 
       return () => clearInterval(interval);
     },
-    [isOn],
+    [isOn, timer],
   );
 
   const onReset = () => {
