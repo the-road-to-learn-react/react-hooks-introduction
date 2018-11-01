@@ -9,12 +9,15 @@ function App() {
       let interval;
 
       if (isOn) {
-        interval = setInterval(() => setTimer(timer + 1), 1000);
+        interval = setInterval(
+          () => setTimer(timer => timer + 1),
+          1000,
+        );
       }
 
       return () => clearInterval(interval);
     },
-    [isOn, timer],
+    [isOn],
   );
 
   const onReset = () => {
