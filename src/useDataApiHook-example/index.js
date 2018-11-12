@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useDataApi = (url, defaultSearch, defaultState) => {
-  const [data, setData] = useState(defaultState);
-  const [search, setSearch] = useState(defaultSearch);
+const useDataApi = (initialUrl, initialData) => {
+  const [data, setData] = useState(initialData);
+  const [url, setUrl] = useState(initialUrl);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -13,7 +13,7 @@ const useDataApi = (url, defaultSearch, defaultState) => {
       setIsLoading(true);
 
       try {
-        const result = await axios(`${url}${search}`);
+        const result = await axios(url);
 
         setData(result.data);
       } catch (error) {
@@ -22,32 +22,35 @@ const useDataApi = (url, defaultSearch, defaultState) => {
 
       setIsLoading(false);
     },
-    [search],
+    [url],
   );
 
-  const doSearch = (event, query) => {
-    setSearch(query);
+  const getRequest = (event, url) => {
+    setUrl(url);
     event.preventDefault();
   };
 
-  return { data, isLoading, isError, doSearch };
+  return { data, isLoading, isError, getRequest };
 };
 
-const INITIAL_SEARCH = 'redux';
-const INITIAL_DATA = { hits: [] };
-
 function App() {
-  const [query, setQuery] = useState(INITIAL_SEARCH);
+  const [query, setQuery] = useState('redux');
 
-  const { data, isLoading, isError, doSearch } = useDataApi(
-    'http://hn.algolia.com/api/v1/search?query=',
-    INITIAL_SEARCH,
-    INITIAL_DATA,
+  const { data, isLoading, isError, getRequest } = useDataApi(
+    'http://hn.algolia.com/api/v1/search?query=redux',
+    { hits: [] },
   );
 
   return (
     <Fragment>
-      <form onSubmit={event => doSearch(event, query)}>
+      <form
+        onSubmit={event =>
+          getRequest(
+            event,
+            `http://hn.algolia.com/api/v1/search?query=${query}`,
+          )
+        }
+      >
         <input
           type="text"
           value={query}
