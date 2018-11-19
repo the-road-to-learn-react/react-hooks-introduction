@@ -7,20 +7,24 @@ const useDataApi = (initialUrl, initialData) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const fetchData = async () => {
+    setIsError(false);
+    setIsLoading(true);
+
+    try {
+      const result = await axios(url);
+
+      setData(result.data);
+    } catch (error) {
+      setIsError(true);
+    }
+
+    setIsLoading(false);
+  };
+
   useEffect(
-    async () => {
-      setIsError(false);
-      setIsLoading(true);
-
-      try {
-        const result = await axios(url);
-
-        setData(result.data);
-      } catch (error) {
-        setIsError(true);
-      }
-
-      setIsLoading(false);
+    () => {
+      fetchData();
     },
     [url],
   );
@@ -35,7 +39,6 @@ const useDataApi = (initialUrl, initialData) => {
 
 function App() {
   const [query, setQuery] = useState('redux');
-
   const { data, isLoading, isError, doGet } = useDataApi(
     'http://hn.algolia.com/api/v1/search?query=redux',
     { hits: [] },
