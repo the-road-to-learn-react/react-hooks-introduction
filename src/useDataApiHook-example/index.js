@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import axios from 'axios';
 
-function dataFetchReducer(state, action) {
+const dataFetchReducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_INIT':
       return { ...state, isLoading: true, isError: false };
@@ -22,12 +22,11 @@ function dataFetchReducer(state, action) {
         ...state,
         isLoading: false,
         isError: true,
-        data: { hits: [] },
       };
     default:
       throw new Error();
   }
-}
+};
 
 const useDataApi = (initialUrl, initialData) => {
   const [url, setUrl] = useState(initialUrl);
