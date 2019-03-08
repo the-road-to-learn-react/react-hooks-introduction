@@ -22,12 +22,9 @@ const useDataApi = (initialUrl, initialData) => {
     setIsLoading(false);
   };
 
-  useEffect(
-    () => {
-      fetchData();
-    },
-    [url],
-  );
+  useEffect(() => {
+    fetchData();
+  }, [url]);
 
   const doGet = (event, url) => {
     setUrl(url);
