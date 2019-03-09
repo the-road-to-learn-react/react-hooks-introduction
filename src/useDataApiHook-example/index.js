@@ -63,17 +63,16 @@ const useDataApi = (initialUrl, initialData) => {
     };
   }, [url]);
 
-  const doGet = (event, url) => {
+  const doFetch = url => {
     setUrl(url);
-    event.preventDefault();
   };
 
-  return { ...state, doGet };
+  return { ...state, doFetch };
 };
 
 function App() {
   const [query, setQuery] = useState('redux');
-  const { data, isLoading, isError, doGet } = useDataApi(
+  const { data, isLoading, isError, doFetch } = useDataApi(
     'http://hn.algolia.com/api/v1/search?query=redux',
     { hits: [] },
   );
@@ -81,12 +80,13 @@ function App() {
   return (
     <Fragment>
       <form
-        onSubmit={event =>
-          doGet(
-            event,
+        onSubmit={event => {
+          doFetch(
             `http://hn.algolia.com/api/v1/search?query=${query}`,
-          )
-        }
+          );
+
+          event.preventDefault();
+        }}
       >
         <input
           type="text"
