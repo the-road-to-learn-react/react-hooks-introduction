@@ -68,7 +68,7 @@ const useDataApi = (initialUrl, initialData) => {
 
 function App() {
   const [query, setQuery] = useState('redux');
-  const [{data, isLoading, isError}, doFetch] = useDataApi(
+  const [{ data, isLoading, isError }, doFetch] = useDataApi(
     'http://hn.algolia.com/api/v1/search?query=redux',
     { hits: [] },
   );
