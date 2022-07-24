@@ -69,7 +69,7 @@ const useDataApi = (initialUrl, initialData) => {
 function App() {
   const [query, setQuery] = useState('redux');
   const [{ data, isLoading, isError }, doFetch] = useDataApi(
-    'http://hn.algolia.com/api/v1/search?query=redux',
+    'https://hn.algolia.com/api/v1/search?query=redux',
     { hits: [] },
   );
 
@@ -78,7 +78,7 @@ function App() {
       <form
         onSubmit={event => {
           doFetch(
-            `http://hn.algolia.com/api/v1/search?query=${query}`,
+            `https://hn.algolia.com/api/v1/search?query=${query}`,
           );
 
           event.preventDefault();
